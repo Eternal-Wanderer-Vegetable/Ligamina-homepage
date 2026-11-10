@@ -148,7 +148,8 @@ section { scroll-margin-top: 84px; }
 }
 
 .hero-title {
-  font-size: clamp(64px, 12vw, 168px);
+  /* cap sized so “Ligamina*” never bleeds into the figure column (~4.5em wide) */
+  font-size: clamp(48px, 10.5vw, 132px);
   line-height: .9;
   letter-spacing: -.04em;
   font-weight: 700;
@@ -196,7 +197,7 @@ section { scroll-margin-top: 84px; }
 
 .facts {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   border-top: 1px solid var(--ink);
   margin-top: clamp(48px, 8vh, 72px);
 }
@@ -225,8 +226,6 @@ section { scroll-margin-top: 84px; }
   margin-top: 8px;
   font-variant-numeric: tabular-nums;
 }
-
-.footnote { font-size: 12px; color: var(--muted); margin-top: 20px; }
 
 /* ============ SECTIONS ============ */
 
@@ -544,8 +543,9 @@ section { scroll-margin-top: 84px; }
 
 @media (max-width: 860px) {
   .site-nav { display: none; }
-  .facts { grid-template-columns: repeat(2, 1fr); gap: 0 24px; }
+  .facts { grid-template-columns: 1fr 1fr; gap: 0 24px; }
   .facts li { border-left: 0; padding-left: 0; }
+  .facts li:last-child { grid-column: 1 / -1; }
   .tier-grid.cols-2, .tier-grid.cols-3 { grid-template-columns: 1fr; }
   .cards { grid-template-columns: 1fr; row-gap: 40px; }
 }

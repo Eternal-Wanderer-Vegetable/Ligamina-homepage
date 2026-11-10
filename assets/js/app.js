@@ -31,15 +31,12 @@
         tagline: "一个运行时，承载多套聊天机器人插件生态。",
         sub: "让 Koishi、NoneBot 与 AstrBot 的原生插件原样运行，并通过 MCP 风格的接口把它们交给任何机器人或 AI 智能体——复用原生插件，无需重建它们的世界。",
         cta1: "前往 GitHub ↗",
-        cta2: "快速开始",
-        footnote: "* Ligamina 是拉丁语「纽带」。"
+        cta2: "快速开始"
       },
       facts: [
-        { k: "现状", v: "第一阶段 · 进行中" },
         { k: "许可证", v: "AGPL-3.0" },
         { k: "代码语言", v: "Rust · Python · TypeScript" },
-        { k: "平台", v: "Windows · Linux" },
-        { k: "始于", v: "2026-10" }
+        { k: "平台", v: "Windows · Linux" }
       ],
       about: {
         title: "Ligamina 是什么",
@@ -120,15 +117,12 @@
         tagline: "One runtime, multiple chatbot plugin ecosystems.",
         sub: "Run native Koishi, NoneBot and AstrBot plugins unchanged — and expose them to any bot or AI agent through an MCP-style interface. Reuse native plugins without rebuilding their worlds.",
         cta1: "View on GitHub ↗",
-        cta2: "Quick start",
-        footnote: "* Ligamina is Latin for “the bonds”."
+        cta2: "Quick start"
       },
       facts: [
-        { k: "Status", v: "Phase 1 · in progress" },
         { k: "License", v: "AGPL-3.0" },
         { k: "Languages", v: "Rust · Python · TypeScript" },
-        { k: "Platforms", v: "Windows · Linux" },
-        { k: "Since", v: "2026-10" }
+        { k: "Platforms", v: "Windows · Linux" }
       ],
       about: {
         title: "What is Ligamina",
