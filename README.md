@@ -20,7 +20,7 @@ python -m http.server 8137
 
 ## 部署到 GitHub Pages / Deploy to GitHub Pages
 
-Push this folder to a repository (e.g. `Ligamina-homepage`), then Settings → Pages → Deploy from branch → `/ (root)`. Relative asset paths (`./assets/...`) mean project-pages subpaths work too.
+Fully automatic via CI (`.github/workflows/deploy.yml`): every push to `main` (or a manual `workflow_dispatch` run) publishes the latest version with the official Actions flow — `checkout → upload-pages-artifact → deploy-pages`. Repo only needs **Settings → Pages → Source: GitHub Actions** (already configured). Relative asset paths (`./assets/...`) mean project-pages subpaths work too.
 
 ## 结构 / Structure
 
