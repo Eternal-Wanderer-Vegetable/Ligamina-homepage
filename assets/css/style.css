@@ -160,10 +160,10 @@ section { scroll-margin-top: 84px; }
   transition: opacity .24s ease, transform .24s ease;
 }
 
-.page-forward-enter-from { opacity: 0; transform: translateX(22px); }
-.page-forward-leave-to { opacity: 0; transform: translateX(-14px); }
-.page-back-enter-from { opacity: 0; transform: translateX(-22px); }
-.page-back-leave-to { opacity: 0; transform: translateX(14px); }
+.page-forward-enter-from { opacity: 0; transform: translateY(22px); }
+.page-forward-leave-to { opacity: 0; transform: translateY(-14px); }
+.page-back-enter-from { opacity: 0; transform: translateY(-22px); }
+.page-back-leave-to { opacity: 0; transform: translateY(14px); }
 
 /* the hero owns the entire first screen; everything else waits below the fold */
 .hero {
