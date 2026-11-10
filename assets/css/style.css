@@ -310,6 +310,43 @@ section { scroll-margin-top: 0; }
   margin-bottom: 16px;
 }
 
+/* --- centered feature page --- */
+
+.features-section.section {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(40px, 5vh, 72px) 0;
+}
+
+.features-section > .container {
+  width: 100%;
+  margin-block: auto;
+}
+
+.features-section .section-head {
+  display: block;
+  position: relative;
+  text-align: center;
+}
+
+.features-section .section-head .sec-no {
+  position: absolute;
+  top: 20px;
+  left: 0;
+}
+
+.features-section .section-head h1 {
+  width: 100%;
+  text-align: center;
+}
+
+.features-section .card { text-align: center; }
+
+.features-section .card p {
+  max-width: 34ch;
+  margin-inline: auto;
+}
+
 .about-figure {
   width: 100%;
   max-width: 560px;
