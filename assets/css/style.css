@@ -143,13 +143,17 @@ section { scroll-margin-top: 0; }
 .lang-sep { color: #c9c9c9; margin: 0 5px; font-size: 12px; }
 
 .gh-link {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: .14em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
   border: 1px solid var(--ink);
-  padding: 8px 14px;
   transition: background .15s ease, color .15s ease;
 }
+
+.gh-link svg { display: block; width: 20px; height: 20px; }
 
 .gh-link:hover { background: var(--ink); color: var(--paper); }
 
@@ -477,7 +481,7 @@ section { scroll-margin-top: 0; }
   font-size: 16px;
 }
 
-.prose code, .verify code, .step-desc code {
+.prose code, .step-desc code {
   font-family: var(--mono);
   font-size: .88em;
   background: #f2f2f2;
@@ -710,15 +714,6 @@ section { scroll-margin-top: 0; }
 
 .code code { font-family: inherit; }
 
-.verify {
-  font-size: 14px;
-  color: var(--muted);
-  border-top: 2px solid var(--ink);
-  padding-top: 18px;
-  margin-top: 12px;
-  max-width: 68ch;
-}
-
 /* ============ FOOTER ============ */
 
 .site-footer {
@@ -828,7 +823,8 @@ section { scroll-margin-top: 0; }
 @media (max-width: 640px) {
   .site-header-inner { gap: 0; }
   .header-tools { gap: 8px; }
-  .gh-link { padding: 6px 9px; font-size: 9px; }
+  .gh-link { width: 34px; height: 34px; }
+  .gh-link svg { width: 18px; height: 18px; }
   .lang-switch button, .lang-sep { font-size: 11px; }
   .site-nav a { font-size: clamp(8px, 2vw, 9px); letter-spacing: 0; }
   .arch-flow-pair, .arch-components { grid-template-columns: 1fr; }

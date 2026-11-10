@@ -83,8 +83,7 @@
           { title: "准备 Host", desc: "Koishi Host 用 npm ci，Python Host 用 uv sync --locked。", cmd: "npm ci            # Koishi host\nuv sync --locked  # Python hosts" },
           { title: "配置 daemon", desc: "编辑 daemon.json：声明监听器、令牌、网关入口与 Host。命令工具默认关闭——通过 command_tools.enabled 开启。" },
           { title: "接入 MCP 客户端", desc: "把 Ligamina 注册到 Claude Code（Bearer 令牌来自 daemon.json）：", cmd: "claude mcp add --transport http plugins http://127.0.0.1:8765/mcp" }
-        ],
-        verify: "验证全栈：在 docs 或 full 模式下运行 init.ps1（Windows）或 init.sh（Linux / macOS）。"
+        ]
       },
       linksItems: [
         { k: "源代码仓库", href: LINKS.repo },
@@ -162,8 +161,7 @@
           { title: "Prepare the hosts", desc: "npm ci for the Koishi host, uv sync --locked for the Python hosts.", cmd: "npm ci            # Koishi host\nuv sync --locked  # Python hosts" },
           { title: "Configure the daemon", desc: "daemon.json declares listeners, tokens, gateway entries and hosts. Command tools are off by default — enable with command_tools.enabled." },
           { title: "Connect an MCP client", desc: "Register Ligamina with Claude Code (Bearer token from daemon.json):", cmd: "claude mcp add --transport http plugins http://127.0.0.1:8765/mcp" }
-        ],
-        verify: "Verify the whole stack: run init.ps1 (Windows) or init.sh (Linux / macOS) in docs or full mode."
+        ]
       },
       linksItems: [
         { k: "Source repository", href: LINKS.repo },
