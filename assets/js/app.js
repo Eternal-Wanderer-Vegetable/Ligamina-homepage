@@ -217,11 +217,13 @@
     if (!svg) return;
 
     var CX = 260, CY = 235; // CORE centre (never moves)
-    var ORBIT = 46;         // seconds per revolution
+    var ORBIT = 38;         // seconds per revolution
     var cfg = [
-      { R: 192, amp: 30, period: 13, phase: 0,     theta0: -2.388 }, // KOISHI
-      { R: 198, amp: 26, period: 17, phase: 2.094, theta0: -0.691 }, // NONEBOT
-      { R: 178, amp: 34, period: 11, phase: 4.189, theta0: 1.695 }   // ASTRBOT
+      // 120°-spaced starting angles keep every chord well clear of CORE:
+      // worst-case chord-to-centre distance ≈ 87px (CORE radius 66)
+      { R: 205, amp: 24, period: 13, phase: 0,     theta0: 3.894 }, // KOISHI
+      { R: 210, amp: 20, period: 17, phase: 2.094, theta0: 5.991 }, // NONEBOT
+      { R: 195, amp: 28, period: 11, phase: 4.189, theta0: 1.801 }  // ASTRBOT
     ];
 
     var nodes = svg.querySelectorAll(".net-node");
