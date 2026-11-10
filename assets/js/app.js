@@ -88,6 +88,7 @@
         { k: "项目文档（docs/ · AGENTS.md）", href: LINKS.docs },
         { k: "许可证 · AGPL-3.0", href: LINKS.license }
       ],
+      pager: { home: "首页" },
       footer: {
         line: "一个运行时，多个世界——Ligamina 项目展示页。",
         top: "回到顶部 ↑"
@@ -166,12 +167,20 @@
         { k: "Documentation (docs/ · AGENTS.md)", href: LINKS.docs },
         { k: "License · AGPL-3.0", href: LINKS.license }
       ],
+      pager: { home: "Home" },
       footer: {
         line: "One runtime, many worlds — the showcase page for the Ligamina project.",
         top: "Back to top ↑"
       }
     }
   };
+
+  var PAGE_IDS = ["about", "features", "architecture", "quickstart"];
+
+  function pageFromLocation() {
+    var hash = window.location.hash.slice(1);
+    return PAGE_IDS.indexOf(hash) >= 0 ? hash : "home";
+  }
 
   var app = Vue.createApp({
     setup: function () {
@@ -187,10 +196,43 @@
 
       var lang = ref(initial);
       var t = computed(function () { return DICT[lang.value]; });
+      var pages = PAGE_IDS.map(function (id) { return { id: id }; });
+      var activePage = ref(pageFromLocation());
+      var pagePosition = computed(function () { return PAGE_IDS.indexOf(activePage.value); });
+      var transitionName = ref("page-forward");
 
       function setLang(l) { lang.value = l; }
 
       function pad(n) { return String(n).padStart(2, "0"); }
+
+      function pageOrder(id) { return id === "home" ? -1 : PAGE_IDS.indexOf(id); }
+
+      function setPage(id) {
+        var nextPage = PAGE_IDS.indexOf(id) >= 0 || id === "home" ? id : "home";
+        if (nextPage === activePage.value) return;
+        transitionName.value = pageOrder(nextPage) > pageOrder(activePage.value) ? "page-forward" : "page-back";
+        activePage.value = nextPage;
+        window.scrollTo(0, 0);
+      }
+
+      function navigate(id) {
+        var nextPage = PAGE_IDS.indexOf(id) >= 0 || id === "home" ? id : "home";
+        var hash = nextPage === "home" ? "#top" : "#" + nextPage;
+        if (window.location.hash !== hash) window.history.pushState({ page: nextPage }, "", hash);
+        if (nextPage === activePage.value) {
+          window.scrollTo(0, 0);
+          return;
+        }
+        setPage(nextPage);
+      }
+
+      function syncPage() {
+        setPage(pageFromLocation());
+      }
+
+      if ("scrollRestoration" in window.history) window.history.scrollRestoration = "manual";
+      window.addEventListener("popstate", syncPage);
+      window.addEventListener("hashchange", syncPage);
 
       watch(lang, function (l) {
         try { window.localStorage.setItem("ligamina-lang", l); } catch (e) { /* ignore */ }
@@ -198,7 +240,19 @@
         document.title = TITLES[l];
       }, { immediate: true });
 
-      return { lang: lang, t: t, dict: DICT, setLang: setLang, pad: pad, links: LINKS };
+      return {
+        lang: lang,
+        t: t,
+        dict: DICT,
+        setLang: setLang,
+        pad: pad,
+        links: LINKS,
+        pages: pages,
+        activePage: activePage,
+        pagePosition: pagePosition,
+        transitionName: transitionName,
+        navigate: navigate
+      };
     }
   });
 

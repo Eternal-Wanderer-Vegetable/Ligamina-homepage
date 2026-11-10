@@ -17,9 +17,9 @@
 
   <header class="site-header">
     <div class="container site-header-inner">
-      <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span>LIGAMINA</a>
-      <nav class="site-nav" aria-label="Sections">
-        <a v-for="(s, i) in t.nav" :key="s.id" :href="'#' + s.id"><i18n-text :zh="dict.zh.nav[i].label" :en="dict.en.nav[i].label"></i18n-text></a>
+      <a class="brand" href="#top" @click.prevent="navigate('home')"><span class="brand-mark" aria-hidden="true"></span>LIGAMINA</a>
+      <nav class="site-nav" aria-label="Pages / 页面">
+        <a v-for="(s, i) in t.nav" :key="s.id" :href="'#' + s.id" :class="{ active: activePage === s.id }" :aria-current="activePage === s.id ? 'page' : null" @click.prevent="navigate(s.id)"><i18n-text :zh="dict.zh.nav[i].label" :en="dict.en.nav[i].label"></i18n-text></a>
       </nav>
       <div class="header-tools">
         <div class="lang-switch" role="group" aria-label="Language / 语言">
@@ -33,8 +33,10 @@
   </header>
 
   <main>
+    <Transition :name="transitionName" mode="out-in">
+      <div class="page-view" :key="activePage">
     <!-- ============ HERO ============ -->
-    <section class="hero">
+    <section class="hero" v-if="activePage === 'home'">
       <div class="container">
         <div class="hero-grid">
           <div class="hero-copy">
@@ -44,7 +46,7 @@
             <p class="hero-sub"><i18n-text block :zh="dict.zh.hero.sub" :en="dict.en.hero.sub"></i18n-text></p>
             <div class="hero-actions">
               <a class="btn btn-primary" :href="links.repo" target="_blank" rel="noopener"><i18n-text :zh="dict.zh.hero.cta1" :en="dict.en.hero.cta1"></i18n-text></a>
-              <a class="btn" href="#quickstart"><i18n-text :zh="dict.zh.hero.cta2" :en="dict.en.hero.cta2"></i18n-text></a>
+              <a class="btn" href="#quickstart" @click.prevent="navigate('quickstart')"><i18n-text :zh="dict.zh.hero.cta2" :en="dict.en.hero.cta2"></i18n-text></a>
             </div>
           </div>
           <figure class="hero-figure" aria-hidden="true">
@@ -81,11 +83,11 @@
     </section>
 
     <!-- ============ 01 ABOUT ============ -->
-    <section id="about" class="section">
+    <section id="about" class="section" v-else-if="activePage === 'about'">
       <div class="container">
         <header class="section-head">
           <span class="sec-no">01</span>
-          <h2><i18n-text :zh="dict.zh.about.title" :en="dict.en.about.title"></i18n-text></h2>
+          <h1><i18n-text :zh="dict.zh.about.title" :en="dict.en.about.title"></i18n-text></h1>
         </header>
         <div class="prose">
           <p v-for="(p, i) in t.about.paras" :key="i"><i18n-text block html :zh="dict.zh.about.paras[i]" :en="dict.en.about.paras[i]"></i18n-text></p>
@@ -94,11 +96,11 @@
     </section>
 
     <!-- ============ 02 FEATURES ============ -->
-    <section id="features" class="section">
+    <section id="features" class="section" v-else-if="activePage === 'features'">
       <div class="container">
         <header class="section-head">
           <span class="sec-no">02</span>
-          <h2><i18n-text :zh="dict.zh.featuresTitle" :en="dict.en.featuresTitle"></i18n-text></h2>
+          <h1><i18n-text :zh="dict.zh.featuresTitle" :en="dict.en.featuresTitle"></i18n-text></h1>
         </header>
         <div class="cards">
           <article class="card" v-for="(f, i) in t.features" :key="i">
@@ -111,11 +113,11 @@
     </section>
 
     <!-- ============ 03 ARCHITECTURE ============ -->
-    <section id="architecture" class="section">
+    <section id="architecture" class="section" v-else-if="activePage === 'architecture'">
       <div class="container">
         <header class="section-head">
           <span class="sec-no">03</span>
-          <h2><i18n-text :zh="dict.zh.arch.title" :en="dict.en.arch.title"></i18n-text></h2>
+          <h1><i18n-text :zh="dict.zh.arch.title" :en="dict.en.arch.title"></i18n-text></h1>
         </header>
         <div class="arch-flowchart">
           <div class="arch-tier">
@@ -175,11 +177,11 @@
     </section>
 
     <!-- ============ 04 QUICK START ============ -->
-    <section id="quickstart" class="section">
+    <section id="quickstart" class="section" v-else-if="activePage === 'quickstart'">
       <div class="container">
         <header class="section-head">
           <span class="sec-no">04</span>
-          <h2><i18n-text :zh="dict.zh.quickstart.title" :en="dict.en.quickstart.title"></i18n-text></h2>
+          <h1><i18n-text :zh="dict.zh.quickstart.title" :en="dict.en.quickstart.title"></i18n-text></h1>
         </header>
         <ol class="steps">
           <li v-for="(s, i) in t.quickstart.steps" :key="i">
@@ -194,7 +196,23 @@
         <p class="verify"><i18n-text block :zh="dict.zh.quickstart.verify" :en="dict.en.quickstart.verify"></i18n-text></p>
       </div>
     </section>
-
+        <nav class="page-pager container" v-if="activePage !== 'home'" aria-label="Page navigation / 页面导航">
+          <a class="page-pager-link" v-if="pagePosition === 0" href="#top" @click.prevent="navigate('home')">
+            <span class="pager-arrow" aria-hidden="true">←</span>
+            <i18n-text :zh="dict.zh.pager.home" :en="dict.en.pager.home"></i18n-text>
+          </a>
+          <a class="page-pager-link" v-else :href="'#' + pages[pagePosition - 1].id" @click.prevent="navigate(pages[pagePosition - 1].id)">
+            <span class="pager-arrow" aria-hidden="true">←</span>
+            <i18n-text :zh="dict.zh.nav[pagePosition - 1].label" :en="dict.en.nav[pagePosition - 1].label"></i18n-text>
+          </a>
+          <span class="page-pager-count">{{ pad(pagePosition + 1) }} <span aria-hidden="true">/</span> 04</span>
+          <a class="page-pager-link page-pager-next" v-if="pagePosition < pages.length - 1" :href="'#' + pages[pagePosition + 1].id" @click.prevent="navigate(pages[pagePosition + 1].id)">
+            <i18n-text :zh="dict.zh.nav[pagePosition + 1].label" :en="dict.en.nav[pagePosition + 1].label"></i18n-text>
+            <span class="pager-arrow" aria-hidden="true">→</span>
+          </a>
+        </nav>
+      </div>
+    </Transition>
   </main>
 
   <footer class="site-footer">
@@ -205,7 +223,7 @@
       </nav>
       <div class="footer-row">
         <p><i18n-text block :zh="dict.zh.footer.line" :en="dict.en.footer.line"></i18n-text></p>
-        <p>© 2026 Eternal-Wanderer-Vegetable · AGPL-3.0 · <a class="footer-top" href="#top"><i18n-text :zh="dict.zh.footer.top" :en="dict.en.footer.top"></i18n-text></a></p>
+        <p>© 2026 Eternal-Wanderer-Vegetable · AGPL-3.0 · <a class="footer-top" href="#top" @click.prevent="navigate('home')"><i18n-text :zh="dict.zh.footer.top" :en="dict.en.footer.top"></i18n-text></a></p>
       </div>
     </div>
   </footer>
