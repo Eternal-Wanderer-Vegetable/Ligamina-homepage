@@ -49,16 +49,28 @@
         { title: "克制的安全模型", body: "预留的工具会话账号永不触碰真实平台；不确定的投递保持「未知」，绝不重放；日志永不含 token。" }
       ],
       arch: {
-        title: "各部分如何相连",
-        labels: { clients: "客户端层", mcp: "MCP · HTTP :8765 · Bearer 令牌", events: "事件上行 · 消息下行", core: "核心层", hosts: "宿主层" },
+        title: "请求与事件如何流动",
+        labels: { clients: "客户端与网关", core: "运行时核心", hosts: "隔离的框架 Host · 每个框架一个进程" },
         clients: ["机器人与 MCP 客户端（如 Claude Code）", "OneBot v11 网关——参考实现已内置"],
-        coreChips: ["命令目录", "工具会话", "事件路由器", "操作账本"],
+        flow: {
+          clientToCore: "MCP 工具调用 · HTTP :8765 · Bearer 令牌",
+          coreToClient: "工具结果与平台事件",
+          coreToHosts: "插件命令调用与消息下发",
+          hostsToCore: "平台事件与插件执行结果"
+        },
+        coreSummary: "统一处理 MCP 请求，并在框架 Host 间分发调用。",
+        coreUnits: [
+          { title: "命令目录", body: "将插件命令整理为可调用的 MCP 工具" },
+          { title: "工具会话", body: "为每次调用创建独立的虚拟私聊会话" },
+          { title: "事件路由器", body: "在客户端与 Host 之间路由平台事件" },
+          { title: "操作账本", body: "记录操作状态与执行结果" }
+        ],
         hosts: [
           { name: "Koishi", meta: "@koishijs/core 4.18.11 · TypeScript" },
           { name: "NoneBot", meta: "nonebot2 2.5.0 · Python" },
           { name: "AstrBot", meta: "4.29.1 · Python" }
         ],
-        note: "Host 原样运行原生插件；每条命令都会变成一个工具：cmd.<host>.<command>。"
+        note: "每个框架在独立 Host 进程中原样运行原生插件；命令按 cmd.<host>.<command> 暴露为 MCP 工具。"
       },
       quickstart: {
         title: "快速开始",
@@ -115,16 +127,28 @@
         { title: "A deliberate safety model", body: "Reserved tool-session accounts never touch real platforms; uncertain deliveries stay “unknown”, never replayed; logs stay token-free." }
       ],
       arch: {
-        title: "How the pieces bond",
-        labels: { clients: "Clients", mcp: "MCP · HTTP :8765 · Bearer token", events: "events in · messages out", core: "Core", hosts: "Hosts" },
+        title: "How requests and events flow",
+        labels: { clients: "Clients & gateways", core: "Runtime core", hosts: "Isolated framework hosts · one process per framework" },
         clients: ["Bots & MCP clients — e.g. Claude Code", "OneBot v11 Gateway — reference implementation included"],
-        coreChips: ["command catalog", "tool sessions", "event router", "operation ledger"],
+        flow: {
+          clientToCore: "MCP tool calls · HTTP :8765 · Bearer token",
+          coreToClient: "Tool results and platform events",
+          coreToHosts: "Plugin calls and message delivery",
+          hostsToCore: "Platform events and plugin results"
+        },
+        coreSummary: "Handles MCP requests and dispatches calls to framework hosts.",
+        coreUnits: [
+          { title: "Command catalog", body: "Exposes plugin commands as callable MCP tools" },
+          { title: "Tool sessions", body: "Runs each call in a fresh virtual private session" },
+          { title: "Event router", body: "Routes platform events between clients and hosts" },
+          { title: "Operation ledger", body: "Tracks operation state and results" }
+        ],
         hosts: [
           { name: "Koishi", meta: "@koishijs/core 4.18.11 · TypeScript" },
           { name: "NoneBot", meta: "nonebot2 2.5.0 · Python" },
           { name: "AstrBot", meta: "4.29.1 · Python" }
         ],
-        note: "Hosts run native plugins unchanged; every command becomes a tool: cmd.<host>.<command>."
+        note: "Each framework runs native plugins unchanged in its own Host process. Commands are exposed as MCP tools: cmd.<host>.<command>."
       },
       quickstart: {
         title: "Quick start",

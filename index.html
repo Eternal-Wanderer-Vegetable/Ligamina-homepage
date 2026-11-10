@@ -117,28 +117,49 @@
           <span class="sec-no">03</span>
           <h2><i18n-text :zh="dict.zh.arch.title" :en="dict.en.arch.title"></i18n-text></h2>
         </header>
-        <div class="arch">
+        <div class="arch-flowchart">
           <div class="arch-tier">
             <p class="tier-label"><i18n-text block :zh="dict.zh.arch.labels.clients" :en="dict.en.arch.labels.clients"></i18n-text></p>
             <div class="tier-grid cols-2">
               <div class="node" v-for="(c, i) in t.arch.clients" :key="i"><i18n-text block :zh="dict.zh.arch.clients[i]" :en="dict.en.arch.clients[i]"></i18n-text></div>
             </div>
           </div>
-          <div class="arch-link">
-            <span class="link-label"><i18n-text :zh="dict.zh.arch.labels.mcp" :en="dict.en.arch.labels.mcp"></i18n-text></span>
-            <span class="link-line" aria-hidden="true"></span>
-            <span class="link-label"><i18n-text :zh="dict.zh.arch.labels.events" :en="dict.en.arch.labels.events"></i18n-text></span>
-          </div>
-          <div class="arch-tier">
-            <p class="tier-label"><i18n-text block :zh="dict.zh.arch.labels.core" :en="dict.en.arch.labels.core"></i18n-text></p>
-            <div class="node node-core">
-              <strong>Rust Core</strong>
-              <div class="chips">
-                <span v-for="(c, i) in t.arch.coreChips" :key="i"><i18n-text :zh="dict.zh.arch.coreChips[i]" :en="dict.en.arch.coreChips[i]"></i18n-text></span>
-              </div>
+          <div class="arch-flow-pair" aria-label="客户端与核心层的数据流 / Client and core data flow">
+            <div class="arch-flow-direction">
+              <span class="flow-arrow" aria-hidden="true">↓</span>
+              <i18n-text block :zh="dict.zh.arch.flow.clientToCore" :en="dict.en.arch.flow.clientToCore"></i18n-text>
+            </div>
+            <div class="arch-flow-direction">
+              <span class="flow-arrow" aria-hidden="true">↑</span>
+              <i18n-text block :zh="dict.zh.arch.flow.coreToClient" :en="dict.en.arch.flow.coreToClient"></i18n-text>
             </div>
           </div>
-          <div class="arch-link"><span class="link-line" aria-hidden="true"></span></div>
+          <div class="arch-core">
+            <div class="arch-core-head">
+              <div>
+                <p class="core-eyebrow"><i18n-text :zh="dict.zh.arch.labels.core" :en="dict.en.arch.labels.core"></i18n-text></p>
+                <h3>Rust Core</h3>
+              </div>
+              <p class="core-summary"><i18n-text block :zh="dict.zh.arch.coreSummary" :en="dict.en.arch.coreSummary"></i18n-text></p>
+            </div>
+            <div class="arch-components">
+              <article class="arch-component" v-for="(unit, i) in t.arch.coreUnits" :key="i">
+                <span class="arch-component-no">0{{ i + 1 }}</span>
+                <h4><i18n-text block :zh="dict.zh.arch.coreUnits[i].title" :en="dict.en.arch.coreUnits[i].title"></i18n-text></h4>
+                <p><i18n-text block :zh="dict.zh.arch.coreUnits[i].body" :en="dict.en.arch.coreUnits[i].body"></i18n-text></p>
+              </article>
+            </div>
+          </div>
+          <div class="arch-flow-pair" aria-label="核心层与 Host 的数据流 / Core and host data flow">
+            <div class="arch-flow-direction">
+              <span class="flow-arrow" aria-hidden="true">↓</span>
+              <i18n-text block :zh="dict.zh.arch.flow.coreToHosts" :en="dict.en.arch.flow.coreToHosts"></i18n-text>
+            </div>
+            <div class="arch-flow-direction">
+              <span class="flow-arrow" aria-hidden="true">↑</span>
+              <i18n-text block :zh="dict.zh.arch.flow.hostsToCore" :en="dict.en.arch.flow.hostsToCore"></i18n-text>
+            </div>
+          </div>
           <div class="arch-tier">
             <p class="tier-label"><i18n-text block :zh="dict.zh.arch.labels.hosts" :en="dict.en.arch.labels.hosts"></i18n-text></p>
             <div class="tier-grid cols-3">
