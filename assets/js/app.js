@@ -179,7 +179,7 @@
 
   function pageFromLocation() {
     var hash = window.location.hash.slice(1);
-    return PAGE_IDS.indexOf(hash) >= 0 ? hash : "home";
+    return hash === "home" || PAGE_IDS.indexOf(hash) >= 0 ? hash : "home";
   }
 
   var app = Vue.createApp({
@@ -196,39 +196,59 @@
 
       var lang = ref(initial);
       var t = computed(function () { return DICT[lang.value]; });
-      var pages = PAGE_IDS.map(function (id) { return { id: id }; });
       var activePage = ref(pageFromLocation());
-      var pagePosition = computed(function () { return PAGE_IDS.indexOf(activePage.value); });
-      var transitionName = ref("page-forward");
 
       function setLang(l) { lang.value = l; }
 
       function pad(n) { return String(n).padStart(2, "0"); }
 
-      function pageOrder(id) { return id === "home" ? -1 : PAGE_IDS.indexOf(id); }
+      function scrollToPage(id) {
+        var target = document.getElementById(id === "home" ? "home" : id);
+        if (!target) return;
+        var behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+        target.scrollIntoView({ behavior: behavior, block: "start" });
+      }
 
-      function setPage(id) {
+      function setPage(id, shouldScroll) {
         var nextPage = PAGE_IDS.indexOf(id) >= 0 || id === "home" ? id : "home";
-        if (nextPage === activePage.value) return;
-        transitionName.value = pageOrder(nextPage) > pageOrder(activePage.value) ? "page-forward" : "page-back";
         activePage.value = nextPage;
-        window.scrollTo(0, 0);
+        if (shouldScroll) scrollToPage(nextPage);
       }
 
       function navigate(id) {
         var nextPage = PAGE_IDS.indexOf(id) >= 0 || id === "home" ? id : "home";
         var hash = nextPage === "home" ? "#top" : "#" + nextPage;
         if (window.location.hash !== hash) window.history.pushState({ page: nextPage }, "", hash);
-        if (nextPage === activePage.value) {
-          window.scrollTo(0, 0);
-          return;
-        }
-        setPage(nextPage);
+        setPage(nextPage, true);
       }
 
       function syncPage() {
-        setPage(pageFromLocation());
+        setPage(pageFromLocation(), true);
       }
+
+      var scrollFrame = 0;
+      function updateActivePage() {
+        scrollFrame = 0;
+        var header = document.querySelector(".site-header");
+        var headerHeight = header ? header.getBoundingClientRect().height : 0;
+        var marker = headerHeight + (window.innerHeight - headerHeight) * 0.4;
+        var sections = document.querySelectorAll(".screen-section");
+        for (var i = 0; i < sections.length; i++) {
+          var rect = sections[i].getBoundingClientRect();
+          if (rect.top <= marker && rect.bottom > marker) {
+            activePage.value = sections[i].id;
+            break;
+          }
+        }
+      }
+
+      function onScroll() {
+        if (scrollFrame) return;
+        scrollFrame = window.requestAnimationFrame(updateActivePage);
+      }
+
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll);
 
       if ("scrollRestoration" in window.history) window.history.scrollRestoration = "manual";
       window.addEventListener("popstate", syncPage);
@@ -247,10 +267,7 @@
         setLang: setLang,
         pad: pad,
         links: LINKS,
-        pages: pages,
         activePage: activePage,
-        pagePosition: pagePosition,
-        transitionName: transitionName,
         navigate: navigate
       };
     }

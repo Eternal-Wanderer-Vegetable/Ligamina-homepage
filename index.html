@@ -33,10 +33,9 @@
   </header>
 
   <main>
-    <Transition :name="transitionName" mode="out-in">
-      <div class="page-view" :key="activePage">
+    <div class="page-view">
     <!-- ============ HERO ============ -->
-    <section class="hero" v-if="activePage === 'home'">
+    <section id="home" class="hero screen-section">
       <div class="container">
         <div class="hero-grid">
           <div class="hero-copy">
@@ -83,7 +82,7 @@
     </section>
 
     <!-- ============ 01 ABOUT ============ -->
-    <section id="about" class="section" v-else-if="activePage === 'about'">
+    <section id="about" class="section screen-section">
       <div class="container">
         <header class="section-head">
           <span class="sec-no">01</span>
@@ -96,7 +95,7 @@
     </section>
 
     <!-- ============ 02 FEATURES ============ -->
-    <section id="features" class="section" v-else-if="activePage === 'features'">
+    <section id="features" class="section screen-section">
       <div class="container">
         <header class="section-head">
           <span class="sec-no">02</span>
@@ -113,7 +112,7 @@
     </section>
 
     <!-- ============ 03 ARCHITECTURE ============ -->
-    <section id="architecture" class="section" v-else-if="activePage === 'architecture'">
+    <section id="architecture" class="section screen-section">
       <div class="container">
         <header class="section-head">
           <span class="sec-no">03</span>
@@ -177,7 +176,7 @@
     </section>
 
     <!-- ============ 04 QUICK START ============ -->
-    <section id="quickstart" class="section" v-else-if="activePage === 'quickstart'">
+    <section id="quickstart" class="section screen-section">
       <div class="container">
         <header class="section-head">
           <span class="sec-no">04</span>
@@ -195,38 +194,21 @@
         </ol>
         <p class="verify"><i18n-text block :zh="dict.zh.quickstart.verify" :en="dict.en.quickstart.verify"></i18n-text></p>
       </div>
+      <footer class="site-footer">
+        <div class="container">
+          <p class="footer-title">Ligamina<span class="accent">.</span></p>
+          <nav class="footer-links" aria-label="Footer links">
+            <a v-for="(l, i) in t.linksItems" :key="l.k" :href="l.href" target="_blank" rel="noopener"><i18n-text :zh="dict.zh.linksItems[i].k" :en="dict.en.linksItems[i].k"></i18n-text>&nbsp;<span aria-hidden="true">↗</span></a>
+          </nav>
+          <div class="footer-row">
+            <p><i18n-text block :zh="dict.zh.footer.line" :en="dict.en.footer.line"></i18n-text></p>
+            <p>© 2026 Eternal-Wanderer-Vegetable · AGPL-3.0 · <a class="footer-top" href="#top" @click.prevent="navigate('home')"><i18n-text :zh="dict.zh.footer.top" :en="dict.en.footer.top"></i18n-text></a></p>
+          </div>
+        </div>
+      </footer>
     </section>
-        <nav class="page-pager container" v-if="activePage !== 'home'" aria-label="Page navigation / 页面导航">
-          <a class="page-pager-link" v-if="pagePosition === 0" href="#top" @click.prevent="navigate('home')">
-            <span class="pager-arrow" aria-hidden="true">←</span>
-            <i18n-text :zh="dict.zh.pager.home" :en="dict.en.pager.home"></i18n-text>
-          </a>
-          <a class="page-pager-link" v-else :href="'#' + pages[pagePosition - 1].id" @click.prevent="navigate(pages[pagePosition - 1].id)">
-            <span class="pager-arrow" aria-hidden="true">←</span>
-            <i18n-text :zh="dict.zh.nav[pagePosition - 1].label" :en="dict.en.nav[pagePosition - 1].label"></i18n-text>
-          </a>
-          <span class="page-pager-count">{{ pad(pagePosition + 1) }} <span aria-hidden="true">/</span> 04</span>
-          <a class="page-pager-link page-pager-next" v-if="pagePosition < pages.length - 1" :href="'#' + pages[pagePosition + 1].id" @click.prevent="navigate(pages[pagePosition + 1].id)">
-            <i18n-text :zh="dict.zh.nav[pagePosition + 1].label" :en="dict.en.nav[pagePosition + 1].label"></i18n-text>
-            <span class="pager-arrow" aria-hidden="true">→</span>
-          </a>
-        </nav>
-      </div>
-    </Transition>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <p class="footer-title">Ligamina<span class="accent">.</span></p>
-      <nav class="footer-links" aria-label="Footer links">
-        <a v-for="(l, i) in t.linksItems" :key="l.k" :href="l.href" target="_blank" rel="noopener"><i18n-text :zh="dict.zh.linksItems[i].k" :en="dict.en.linksItems[i].k"></i18n-text>&nbsp;<span aria-hidden="true">↗</span></a>
-      </nav>
-      <div class="footer-row">
-        <p><i18n-text block :zh="dict.zh.footer.line" :en="dict.en.footer.line"></i18n-text></p>
-        <p>© 2026 Eternal-Wanderer-Vegetable · AGPL-3.0 · <a class="footer-top" href="#top" @click.prevent="navigate('home')"><i18n-text :zh="dict.zh.footer.top" :en="dict.en.footer.top"></i18n-text></a></p>
-      </div>
     </div>
-  </footer>
+  </main>
 
   <noscript>
     <p style="padding:16px;font-family:sans-serif">
