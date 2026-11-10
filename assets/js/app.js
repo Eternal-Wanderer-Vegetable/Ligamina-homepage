@@ -301,9 +301,32 @@
         scrollFrame = window.requestAnimationFrame(updateActivePage);
       }
 
+      function observeFeatureCards() {
+        var cards = document.querySelectorAll(".features-section .card");
+        if (!("IntersectionObserver" in window)) {
+          Array.prototype.forEach.call(cards, function (card) {
+            card.classList.add("is-visible");
+          });
+          return;
+        }
+
+        var observer = new window.IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          });
+        }, { threshold: 0.15 });
+
+        Array.prototype.forEach.call(cards, function (card) {
+          observer.observe(card);
+        });
+      }
+
       window.addEventListener("scroll", onScroll, { passive: true });
       window.addEventListener("resize", onScroll);
       Vue.onMounted(function () {
+        observeFeatureCards();
         window.requestAnimationFrame(function () {
           if (window.location.hash && activePage.value !== "home") scrollToPage(activePage.value, true);
           updateActivePage();
