@@ -99,17 +99,25 @@ section { scroll-margin-top: 0; }
 .brand-mark { width: 13px; height: 13px; background: var(--red); }
 
 .site-nav {
-  display: flex;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+  width: 420px;
   margin-left: auto;
 }
 
 .site-nav a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: .14em;
   padding-bottom: 5px;
   border-bottom: 1px solid transparent;
+  text-align: center;
+  white-space: nowrap;
   opacity: .85;
   transition: color .15s ease, opacity .15s ease, border-color .15s ease;
 }
@@ -784,7 +792,6 @@ section { scroll-margin-top: 0; }
   .about-layout { gap: 32px; }
   .cards { grid-template-columns: repeat(2, 1fr); }
   .arch-components { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .site-nav { gap: 16px; }
 }
 
 @media (max-width: 860px) {
@@ -799,15 +806,15 @@ section { scroll-margin-top: 0; }
   .brand { order: 1; }
   .header-tools { order: 2; gap: 10px; }
   .site-nav {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     order: 3;
     width: 100%;
-    justify-content: space-between;
-    gap: clamp(8px, 2vw, 16px);
+    gap: clamp(4px, 1vw, 8px);
     margin-left: 0;
     padding-top: 5px;
   }
-  .site-nav a { font-size: 10px; letter-spacing: .06em; white-space: nowrap; }
+  .site-nav a { font-size: 10px; letter-spacing: .06em; }
   .about-layout { grid-template-columns: 1fr; gap: 28px; }
   .about-section.section { padding: 32px 0; }
   .about-figure { justify-self: center; max-width: 420px; }
@@ -823,7 +830,7 @@ section { scroll-margin-top: 0; }
   .header-tools { gap: 8px; }
   .gh-link { padding: 6px 9px; font-size: 9px; }
   .lang-switch button, .lang-sep { font-size: 11px; }
-  .site-nav a { font-size: 9px; letter-spacing: .03em; }
+  .site-nav a { font-size: clamp(8px, 2vw, 9px); letter-spacing: 0; }
   .arch-flow-pair, .arch-components { grid-template-columns: 1fr; }
   .about-layout { gap: 12px; }
   .about-section.section { padding: 24px 0; }
