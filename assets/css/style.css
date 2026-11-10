@@ -195,36 +195,21 @@ section { scroll-margin-top: 84px; }
 
 .net { width: 100%; height: auto; font-family: inherit; }
 
-.facts {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  border-top: 1px solid var(--ink);
-  margin-top: clamp(48px, 8vh, 72px);
+/* slow orbital spin; labels counter-rotate so they stay upright */
+.net-rotor {
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+  animation: net-spin 36s linear infinite;
 }
 
-.facts li {
-  padding: 16px 16px 0 0;
-  margin-top: 16px;
-  border-left: 1px solid var(--soft);
-  padding-left: 16px;
+.net-rotor text {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: net-spin 36s linear infinite reverse;
 }
 
-.facts li:first-child { border-left: 0; padding-left: 0; }
-
-.fact-k {
-  display: block;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: .16em;
-  color: var(--muted);
-}
-
-.fact-v {
-  display: block;
-  font-size: 14px;
-  font-weight: 600;
-  margin-top: 8px;
-  font-variant-numeric: tabular-nums;
+@keyframes net-spin {
+  to { transform: rotate(360deg); }
 }
 
 /* ============ SECTIONS ============ */
@@ -528,7 +513,6 @@ section { scroll-margin-top: 84px; }
 :lang(zh-CN) .hero-tagline { max-width: 24em; }
 
 :lang(zh-CN) .kicker,
-:lang(zh-CN) .fact-k,
 :lang(zh-CN) .tier-label,
 :lang(zh-CN) .status-tag { letter-spacing: .12em; }
 
@@ -543,9 +527,6 @@ section { scroll-margin-top: 84px; }
 
 @media (max-width: 860px) {
   .site-nav { display: none; }
-  .facts { grid-template-columns: 1fr 1fr; gap: 0 24px; }
-  .facts li { border-left: 0; padding-left: 0; }
-  .facts li:last-child { grid-column: 1 / -1; }
   .tier-grid.cols-2, .tier-grid.cols-3 { grid-template-columns: 1fr; }
   .cards { grid-template-columns: 1fr; row-gap: 40px; }
 }
@@ -562,5 +543,5 @@ section { scroll-margin-top: 84px; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  * { transition: none !important; }
+  * { transition: none !important; animation: none !important; }
 }

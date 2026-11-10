@@ -33,11 +33,6 @@
         cta1: "前往 GitHub ↗",
         cta2: "快速开始"
       },
-      facts: [
-        { k: "许可证", v: "AGPL-3.0" },
-        { k: "代码语言", v: "Rust · Python · TypeScript" },
-        { k: "平台", v: "Windows · Linux" }
-      ],
       about: {
         title: "Ligamina 是什么",
         paras: [
@@ -119,11 +114,6 @@
         cta1: "View on GitHub ↗",
         cta2: "Quick start"
       },
-      facts: [
-        { k: "License", v: "AGPL-3.0" },
-        { k: "Languages", v: "Rust · Python · TypeScript" },
-        { k: "Platforms", v: "Windows · Linux" }
-      ],
       about: {
         title: "What is Ligamina",
         paras: [
