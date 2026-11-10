@@ -399,56 +399,6 @@ section { scroll-margin-top: 84px; }
   max-width: 68ch;
 }
 
-/* --- status --- */
-
-.status-list li {
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  gap: 20px;
-  align-items: center;
-  padding: 15px 0;
-  border-bottom: 1px solid var(--soft);
-}
-
-.status-list li:first-child { border-top: 1px solid var(--ink); }
-
-.status-label { font-size: 15px; font-weight: 600; }
-
-.status-note { font-size: 12px; color: var(--muted); text-align: right; }
-
-.status-tag {
-  font-family: var(--mono);
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: .14em;
-  padding: 5px 12px;
-  white-space: nowrap;
-  justify-self: end;
-}
-
-.tag-pass { background: var(--ink); color: var(--paper); }
-
-.tag-blocked { border: 1px solid var(--red); color: var(--red); }
-
-/* --- links --- */
-
-.link-list { border-top: 1px solid var(--ink); }
-
-.link-list a {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 0;
-  border-bottom: 1px solid var(--soft);
-  font-size: 18px;
-  font-weight: 600;
-  transition: color .15s ease, padding-left .15s ease;
-}
-
-.link-list a:hover { color: var(--red); padding-left: 8px; }
-
-.link-arrow { font-family: var(--mono); font-size: 16px; }
-
 /* ============ FOOTER ============ */
 
 .site-footer {
@@ -466,6 +416,24 @@ section { scroll-margin-top: 84px; }
 }
 
 .site-footer .accent { color: var(--red); }
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 40px;
+  margin-top: 34px;
+}
+
+.footer-links a {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--paper);
+  border-bottom: 1px solid rgba(255, 255, 255, .35);
+  padding-bottom: 3px;
+  transition: color .15s ease, border-color .15s ease;
+}
+
+.footer-links a:hover { color: var(--red); border-color: var(--red); }
 
 .footer-row {
   display: flex;
@@ -499,8 +467,7 @@ section { scroll-margin-top: 84px; }
 :lang(zh-CN) .hero-tagline { max-width: 24em; }
 
 :lang(zh-CN) .kicker,
-:lang(zh-CN) .tier-label,
-:lang(zh-CN) .status-tag { letter-spacing: .12em; }
+:lang(zh-CN) .tier-label { letter-spacing: .12em; }
 
 /* ============ RESPONSIVE ============ */
 
@@ -520,10 +487,6 @@ section { scroll-margin-top: 84px; }
 @media (max-width: 640px) {
   .site-header-inner { height: 56px; gap: 14px; }
   .steps li { grid-template-columns: 44px 1fr; gap: 16px; }
-  .status-list li { grid-template-columns: 1fr auto; grid-template-areas: "label tag" "note tag"; }
-  .status-label { grid-area: label; }
-  .status-note { grid-area: note; text-align: left; }
-  .status-tag { grid-area: tag; align-self: center; }
   .hero-actions .btn { width: 100%; text-align: center; }
 }
 

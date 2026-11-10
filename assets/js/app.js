@@ -22,9 +22,7 @@
         { id: "about", label: "概述" },
         { id: "features", label: "特性" },
         { id: "architecture", label: "架构" },
-        { id: "quickstart", label: "快速开始" },
-        { id: "status", label: "现状" },
-        { id: "links", label: "链接" }
+        { id: "quickstart", label: "快速开始" }
       ],
       hero: {
         kicker: "聊天机器人插件互操作运行时 —— Rust · MCP",
@@ -72,19 +70,6 @@
         ],
         verify: "验证全栈：在 docs 或 full 模式下运行 init.ps1（Windows）或 init.sh（Linux / macOS）。"
       },
-      statusTitle: "现状一览",
-      statusWords: { pass: "通过", blocked: "受阻" },
-      status: [
-        { label: "Core + Koishi 与 NoneBot Host · HTTP 与 MCP", note: "第一阶段验收通过", state: "pass" },
-        { label: "禁网 Linux Worker 中的命令工具", note: "工具级运行 18/18 通过", state: "pass" },
-        { label: "AstrBot Host", note: "市场目录已冻结 · 3,265 个插件", state: "pass" },
-        { label: "AstrBot 安装试点", note: "21/24", state: "pass" },
-        { label: "AstrBot 行为测试", note: "24/24", state: "pass" },
-        { label: "全目录兼容性", note: "", state: "blocked" },
-        { label: "Windows 沙箱强制", note: "", state: "blocked" },
-        { label: "真实平台投递", note: "测试机器人丢失工具回复", state: "blocked" }
-      ],
-      linksTitle: "链接",
       linksItems: [
         { k: "源代码仓库", href: LINKS.repo },
         { k: "提交 Issue", href: LINKS.issues },
@@ -103,9 +88,7 @@
         { id: "about", label: "Overview" },
         { id: "features", label: "Features" },
         { id: "architecture", label: "Architecture" },
-        { id: "quickstart", label: "Quick start" },
-        { id: "status", label: "Status" },
-        { id: "links", label: "Links" }
+        { id: "quickstart", label: "Quick start" }
       ],
       hero: {
         kicker: "Chatbot plugin interoperability runtime — Rust · MCP",
@@ -153,19 +136,6 @@
         ],
         verify: "Verify the whole stack: run init.ps1 (Windows) or init.sh (Linux / macOS) in docs or full mode."
       },
-      statusTitle: "Where things stand",
-      statusWords: { pass: "PASS", blocked: "BLOCKED" },
-      status: [
-        { label: "Core + Koishi & NoneBot hosts · HTTP & MCP", note: "Phase 1 acceptance passed", state: "pass" },
-        { label: "Command tools in network-disabled Linux workers", note: "18/18 tool-level runs", state: "pass" },
-        { label: "AstrBot host", note: "market catalog frozen · 3,265 plugins", state: "pass" },
-        { label: "AstrBot install pilot", note: "21/24", state: "pass" },
-        { label: "AstrBot behavior tests", note: "24/24", state: "pass" },
-        { label: "Catalog-wide compatibility", note: "", state: "blocked" },
-        { label: "Windows sandbox enforcement", note: "", state: "blocked" },
-        { label: "Real-platform delivery", note: "a test bot drops tool replies", state: "blocked" }
-      ],
-      linksTitle: "Links",
       linksItems: [
         { k: "Source repository", href: LINKS.repo },
         { k: "Report an issue", href: LINKS.issues },
