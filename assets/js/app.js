@@ -37,7 +37,8 @@
           "Ligamina（拉丁语：纽带）是一个基于 Rust 的运行时，让来自 Koishi、NoneBot 与 AstrBot 的聊天机器人插件<em>原封不动</em>地并排运行，共享同一个 MCP 风格的接口。",
           "Rust Core 监督相互隔离的 Host 进程——每个框架一个——完整保留各插件原生的命令解析、中间件与存储。对外，每个插件就是一个名为 <code>cmd.&lt;host&gt;.&lt;command&gt;</code> 的 MCP 工具，而每次工具调用都在一个全新的虚拟私聊会话中执行。",
           "它同时也是一个兼容性实验室：插件目录可以按自定义哈希冻结；第三方插件在与操作系统隔离的 Worker 中测试——每条结果都钉在确切的版本、哈希、依赖锁与测试用例上。"
-        ]
+        ],
+        diagramCaption: "Koishi、NoneBot 与 AstrBot 原生插件在各自 Host 中运行，由 Ligamina Core 统一暴露为 MCP 工具，并由兼容性实验室持续验证。"
       },
       featuresTitle: "它能做什么",
       features: [
@@ -116,7 +117,8 @@
           "Ligamina (Latin: “the bonds”) is a Rust-based runtime that runs chat-bot plugins from Koishi, NoneBot and AstrBot <em>unchanged</em> — side by side, behind one MCP-style interface.",
           "A Rust Core supervises isolated Host processes — one per framework — keeping each plugin's native command parsing, middleware and storage fully intact. To the outside, every plugin appears as an MCP tool named <code>cmd.&lt;host&gt;.&lt;command&gt;</code>, and every tool call executes inside a fresh virtual private conversation.",
           "It doubles as a compatibility lab: plugin catalogs can be frozen with custom hashes, and third-party plugins are tested in OS-isolated workers — every result pinned to exact versions, hashes, dependency locks and test cases."
-        ]
+        ],
+        diagramCaption: "Native Koishi, NoneBot and AstrBot plugins run in their own Hosts, become MCP tools through the Ligamina Core, and are validated by the compatibility lab."
       },
       featuresTitle: "What it does",
       features: [
@@ -202,10 +204,10 @@
 
       function pad(n) { return String(n).padStart(2, "0"); }
 
-      function scrollToPage(id) {
+      function scrollToPage(id, immediate) {
         var target = document.getElementById(id === "home" ? "home" : id);
         if (!target) return;
-        var behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+        var behavior = immediate || window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
         target.scrollIntoView({ behavior: behavior, block: "start" });
       }
 
@@ -249,6 +251,12 @@
 
       window.addEventListener("scroll", onScroll, { passive: true });
       window.addEventListener("resize", onScroll);
+      Vue.onMounted(function () {
+        window.requestAnimationFrame(function () {
+          if (window.location.hash && activePage.value !== "home") scrollToPage(activePage.value, true);
+          updateActivePage();
+        });
+      });
 
       if ("scrollRestoration" in window.history) window.history.scrollRestoration = "manual";
       window.addEventListener("popstate", syncPage);

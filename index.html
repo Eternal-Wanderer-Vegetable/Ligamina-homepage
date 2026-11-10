@@ -10,7 +10,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://github.com/Eternal-Wanderer-Vegetable/Ligamina">
   <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20fill='%23E63312'/%3E%3Ctext%20x='32'%20y='45'%20font-family='Helvetica,Arial,sans-serif'%20font-size='38'%20font-weight='bold'%20fill='white'%20text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./assets/css/style.css?v=9378827">
+  <link rel="stylesheet" href="./assets/css/style.css?v=9378830">
 </head>
 <body id="top">
 <div id="app" v-cloak>
@@ -82,15 +82,68 @@
     </section>
 
     <!-- ============ 01 ABOUT ============ -->
-    <section id="about" class="section screen-section">
-      <div class="container">
-        <header class="section-head">
-          <span class="sec-no">01</span>
-          <h1><i18n-text :zh="dict.zh.about.title" :en="dict.en.about.title"></i18n-text></h1>
-        </header>
-        <div class="prose">
-          <p v-for="(p, i) in t.about.paras" :key="i"><i18n-text block html :zh="dict.zh.about.paras[i]" :en="dict.en.about.paras[i]"></i18n-text></p>
+    <section id="about" class="section screen-section about-section">
+      <div class="container about-layout">
+        <div class="about-copy">
+          <header class="section-head">
+            <span class="sec-no">01</span>
+            <h1><i18n-text :zh="dict.zh.about.title" :en="dict.en.about.title"></i18n-text></h1>
+          </header>
+          <div class="prose">
+            <p v-for="(p, i) in t.about.paras" :key="i"><i18n-text block html :zh="dict.zh.about.paras[i]" :en="dict.en.about.paras[i]"></i18n-text></p>
+          </div>
         </div>
+        <figure class="about-figure">
+          <svg class="about-diagram" viewBox="0 0 600 460" role="img" :aria-label="lang === 'zh' ? dict.zh.about.diagramCaption : dict.en.about.diagramCaption">
+            <title id="about-svg-title">Ligamina connects native plugins to MCP tools</title>
+            <desc id="about-svg-desc">Koishi, NoneBot and AstrBot plugins run in the Ligamina Rust Core, which exposes tools and supports a compatibility lab.</desc>
+            <g class="about-grid" aria-hidden="true">
+              <path d="M40 58H560M40 402H560" />
+              <path d="M76 58V402M524 58V402" />
+            </g>
+            <g class="about-connectors" aria-hidden="true">
+              <path d="M190 130C225 130 224 190 252 207" />
+              <path d="M190 230H246" />
+              <path d="M190 330C225 330 224 270 252 253" />
+              <path d="M348 207C378 188 373 153 404 153" />
+              <path d="M350 253C380 270 373 307 404 307" />
+              <circle cx="220" cy="230" r="4" />
+              <circle cx="378" cy="230" r="4" />
+            </g>
+            <g class="about-hosts">
+              <rect x="44" y="101" width="146" height="58" />
+              <rect x="44" y="201" width="146" height="58" />
+              <rect x="44" y="301" width="146" height="58" />
+              <text class="about-micro" x="60" y="123">NATIVE HOST</text>
+              <text class="about-host-name" x="60" y="145">KOISHI</text>
+              <text class="about-micro" x="60" y="223">NATIVE HOST</text>
+              <text class="about-host-name" x="60" y="245">NONEBOT</text>
+              <text class="about-micro" x="60" y="323">NATIVE HOST</text>
+              <text class="about-host-name" x="60" y="345">ASTRBOT</text>
+            </g>
+            <g class="about-core">
+              <circle cx="300" cy="230" r="69" />
+              <circle class="about-core-ring" cx="300" cy="230" r="82" />
+              <text class="about-core-kicker" x="300" y="221">LIGAMINA</text>
+              <text class="about-core-name" x="300" y="247">RUST CORE</text>
+              <text class="about-core-meta" x="300" y="269">ONE RUNTIME</text>
+            </g>
+            <g class="about-output">
+              <rect x="404" y="105" width="152" height="96" />
+              <rect x="404" y="259" width="152" height="96" />
+              <text class="about-micro" x="422" y="130">01 / INTERFACE</text>
+              <text class="about-output-title" x="422" y="156">MCP TOOLS</text>
+              <text class="about-output-code" x="422" y="178">cmd.&lt;host&gt;.&lt;command&gt;</text>
+              <text class="about-micro" x="422" y="284">02 / VALIDATION</text>
+              <text class="about-output-title" x="422" y="310">COMPATIBILITY</text>
+              <text class="about-output-code" x="422" y="332">catalog · hashes · workers</text>
+              <path class="about-check" d="M532 121l5 5 9-10" />
+              <path class="about-check" d="M532 275l5 5 9-10" />
+            </g>
+            <text class="about-diagram-caption" x="44" y="432">NATIVE PLUGINS, ONE SHARED INTERFACE</text>
+            <text class="about-diagram-index" x="556" y="432" text-anchor="end">01 — 05</text>
+          </svg>
+        </figure>
       </div>
     </section>
 
@@ -219,6 +272,6 @@
 </div>
 
 <script src="./assets/vendor/vue.global.prod.js"></script>
-<script src="./assets/js/app.js"></script>
+<script src="./assets/js/app.js?v=9378830"></script>
 </body>
 </html>
