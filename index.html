@@ -10,7 +10,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://github.com/Eternal-Wanderer-Vegetable/Ligamina">
   <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20fill='%23E63312'/%3E%3Ctext%20x='32'%20y='45'%20font-family='Helvetica,Arial,sans-serif'%20font-size='38'%20font-weight='bold'%20fill='white'%20text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./assets/css/style.css?v=9378835">
+  <link rel="stylesheet" href="./assets/css/style.css?v=9378836">
 </head>
 <body id="top">
 <div id="app" v-cloak>
@@ -37,7 +37,7 @@
   <main>
     <div class="page-view">
     <!-- ============ HERO ============ -->
-    <section id="home" class="hero screen-section">
+    <section id="home" class="hero screen-section" :class="{ 'is-entered': enteredPages.includes('home') }">
       <div class="container">
         <div class="hero-grid">
           <div class="hero-copy">
@@ -84,7 +84,7 @@
     </section>
 
     <!-- ============ 01 ABOUT ============ -->
-    <section id="about" class="section screen-section about-section">
+    <section id="about" class="section screen-section about-section" :class="{ 'is-entered': enteredPages.includes('about') }">
       <div class="container about-layout">
         <div class="about-copy">
           <header class="section-head">
@@ -150,7 +150,7 @@
     </section>
 
     <!-- ============ 02 FEATURES ============ -->
-    <section id="features" class="section screen-section features-section">
+    <section id="features" class="section screen-section features-section" :class="{ 'is-entered': enteredPages.includes('features') }">
       <div class="container">
         <header class="section-head">
           <span class="sec-no">02</span>
@@ -167,7 +167,7 @@
     </section>
 
     <!-- ============ 03 ARCHITECTURE ============ -->
-    <section id="architecture" class="section screen-section">
+    <section id="architecture" class="section screen-section" :class="{ 'is-entered': enteredPages.includes('architecture') }">
       <div class="container">
         <header class="section-head">
           <span class="sec-no">03</span>
@@ -231,7 +231,7 @@
     </section>
 
     <!-- ============ 04 QUICK START ============ -->
-    <section id="quickstart" class="section screen-section">
+    <section id="quickstart" class="section screen-section" :class="{ 'is-entered': enteredPages.includes('quickstart') }">
       <div class="container">
         <header class="section-head">
           <span class="sec-no">04</span>
@@ -278,6 +278,6 @@
 </div>
 
 <script src="./assets/vendor/vue.global.prod.js"></script>
-<script src="./assets/js/app.js?v=9378834"></script>
+<script src="./assets/js/app.js?v=9378836"></script>
 </body>
 </html>

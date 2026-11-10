@@ -175,6 +175,57 @@ section { scroll-margin-top: 0; }
   scroll-snap-stop: always;
 }
 
+@keyframes page-content-enter {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes page-visual-enter {
+  from { opacity: 0; transform: translateY(14px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.screen-section.is-entered .hero-copy,
+.screen-section.is-entered .section-head {
+  animation: page-content-enter .62s cubic-bezier(.2, .7, .25, 1) both;
+}
+
+.screen-section.is-entered .about-copy .prose {
+  animation: page-content-enter .62s cubic-bezier(.2, .7, .25, 1) .1s both;
+}
+
+.screen-section.is-entered .hero-figure,
+.screen-section.is-entered .about-figure {
+  animation: page-visual-enter .76s cubic-bezier(.2, .7, .25, 1) .1s both;
+}
+
+.features-section.is-entered .card {
+  animation: page-content-enter .62s cubic-bezier(.2, .7, .25, 1) both;
+}
+
+.features-section.is-entered .card:nth-child(1) { animation-delay: .08s; }
+.features-section.is-entered .card:nth-child(2) { animation-delay: .16s; }
+.features-section.is-entered .card:nth-child(3) { animation-delay: .24s; }
+
+.screen-section.is-entered .arch-flowchart > *,
+.screen-section.is-entered .steps > li {
+  animation: page-content-enter .62s cubic-bezier(.2, .7, .25, 1) both;
+}
+
+.screen-section.is-entered .arch-flowchart > :nth-child(1),
+.screen-section.is-entered .steps > :nth-child(1) { animation-delay: .06s; }
+.screen-section.is-entered .arch-flowchart > :nth-child(2),
+.screen-section.is-entered .steps > :nth-child(2) { animation-delay: .12s; }
+.screen-section.is-entered .arch-flowchart > :nth-child(3),
+.screen-section.is-entered .steps > :nth-child(3) { animation-delay: .18s; }
+.screen-section.is-entered .arch-flowchart > :nth-child(4),
+.screen-section.is-entered .steps > :nth-child(4) { animation-delay: .24s; }
+.screen-section.is-entered .arch-flowchart > :nth-child(5) { animation-delay: .3s; }
+
+.screen-section.is-entered .site-footer .container {
+  animation: page-content-enter .62s cubic-bezier(.2, .7, .25, 1) .3s both;
+}
+
 /* the hero owns the entire first screen; everything else waits below the fold */
 .hero {
   min-height: calc(100vh - var(--header-h));

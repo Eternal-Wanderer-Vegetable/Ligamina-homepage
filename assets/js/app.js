@@ -195,6 +195,7 @@
       var lang = ref(initial);
       var t = computed(function () { return DICT[lang.value]; });
       var activePage = ref(pageFromLocation());
+      var enteredPages = ref([activePage.value]);
       var copyState = ref({ index: -1, status: "idle" });
       var copyTimer = 0;
 
@@ -254,8 +255,15 @@
         target.scrollIntoView({ behavior: behavior, block: "start" });
       }
 
+      function markPageEntered(id) {
+        if (enteredPages.value.indexOf(id) < 0) {
+          enteredPages.value = enteredPages.value.concat(id);
+        }
+      }
+
       function setPage(id, shouldScroll) {
         var nextPage = PAGE_IDS.indexOf(id) >= 0 || id === "home" ? id : "home";
+        markPageEntered(nextPage);
         activePage.value = nextPage;
         if (shouldScroll) scrollToPage(nextPage);
       }
@@ -281,6 +289,7 @@
         for (var i = 0; i < sections.length; i++) {
           var rect = sections[i].getBoundingClientRect();
           if (rect.top <= marker && rect.bottom > marker) {
+            markPageEntered(sections[i].id);
             activePage.value = sections[i].id;
             break;
           }
@@ -321,6 +330,7 @@
         copyLabel: copyLabel,
         links: LINKS,
         activePage: activePage,
+        enteredPages: enteredPages,
         navigate: navigate
       };
     }
