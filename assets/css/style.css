@@ -38,6 +38,26 @@ svg { display: block; }
 
 [v-cloak] { display: none !important; }
 
+/* Both locales share one grid cell. The invisible layer still determines the
+   cell's size, keeping line wrapping and surrounding layout stable on toggle. */
+.i18n-text {
+  display: inline-grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+  vertical-align: baseline;
+}
+
+.i18n-text-block { display: grid; width: 100%; }
+
+.i18n-layer {
+  grid-area: 1 / 1;
+  min-width: 0;
+  visibility: hidden;
+}
+
+:lang(zh-CN) .i18n-layer[lang="zh-CN"],
+:lang(en) .i18n-layer[lang="en"] { visibility: visible; }
+
 .container {
   max-width: var(--max);
   margin: 0 auto;
@@ -229,11 +249,15 @@ section { scroll-margin-top: 84px; }
 }
 
 .section-head h2 {
+  flex: 1;
+  min-width: 0;
   font-size: clamp(28px, 4vw, 44px);
   letter-spacing: -.02em;
   font-weight: 700;
   line-height: 1.1;
 }
+
+.section-head h2 .i18n-text { display: grid; width: 100%; }
 
 /* --- about prose --- */
 
@@ -462,21 +486,19 @@ section { scroll-margin-top: 84px; }
 
 /* ============ ZH TYPOGRAPHY TWEAKS ============ */
 
-:lang(zh-CN) .hero-title,
-:lang(zh-CN) .section-head h2,
-:lang(zh-CN) .footer-title,
-:lang(zh-CN) .card h3,
-:lang(zh-CN) .step-body h3 { letter-spacing: 0; }
+.section-head h2 .i18n-layer[lang="zh-CN"],
+.card h3 .i18n-layer[lang="zh-CN"],
+.step-body h3 .i18n-layer[lang="zh-CN"] { letter-spacing: 0; }
 
-:lang(zh-CN) .prose p,
-:lang(zh-CN) .hero-sub,
-:lang(zh-CN) .card p { line-height: 1.9; }
+.prose .i18n-layer[lang="zh-CN"],
+.hero-sub .i18n-layer[lang="zh-CN"],
+.card p .i18n-layer[lang="zh-CN"] { line-height: 1.9; }
 
-/* keep “生态” and friends from breaking mid-word on wide screens */
-:lang(zh-CN) .hero-tagline { max-width: 24em; }
+/* Keep the same line measure for both localized hero taglines. */
+.hero-tagline { max-width: 34ch; }
 
-:lang(zh-CN) .kicker,
-:lang(zh-CN) .tier-label { letter-spacing: .12em; }
+.kicker .i18n-layer[lang="zh-CN"],
+.tier-label .i18n-layer[lang="zh-CN"] { letter-spacing: .12em; }
 
 /* ============ RESPONSIVE ============ */
 

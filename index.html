@@ -19,7 +19,7 @@
     <div class="container site-header-inner">
       <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span>LIGAMINA</a>
       <nav class="site-nav" aria-label="Sections">
-        <a v-for="s in t.nav" :key="s.id" :href="'#' + s.id">{{ s.label }}</a>
+        <a v-for="(s, i) in t.nav" :key="s.id" :href="'#' + s.id"><i18n-text :zh="dict.zh.nav[i].label" :en="dict.en.nav[i].label"></i18n-text></a>
       </nav>
       <div class="header-tools">
         <div class="lang-switch" role="group" aria-label="Language / 语言">
@@ -38,13 +38,13 @@
       <div class="container">
         <div class="hero-grid">
           <div class="hero-copy">
-            <p class="kicker">{{ t.hero.kicker }}</p>
+            <p class="kicker"><i18n-text block :zh="dict.zh.hero.kicker" :en="dict.en.hero.kicker"></i18n-text></p>
             <h1 class="hero-title">Ligamina</h1>
-            <p class="hero-tagline">{{ t.hero.tagline }}</p>
-            <p class="hero-sub">{{ t.hero.sub }}</p>
+            <p class="hero-tagline"><i18n-text block :zh="dict.zh.hero.tagline" :en="dict.en.hero.tagline"></i18n-text></p>
+            <p class="hero-sub"><i18n-text block :zh="dict.zh.hero.sub" :en="dict.en.hero.sub"></i18n-text></p>
             <div class="hero-actions">
-              <a class="btn btn-primary" :href="links.repo" target="_blank" rel="noopener">{{ t.hero.cta1 }}</a>
-              <a class="btn" href="#quickstart">{{ t.hero.cta2 }}</a>
+              <a class="btn btn-primary" :href="links.repo" target="_blank" rel="noopener"><i18n-text :zh="dict.zh.hero.cta1" :en="dict.en.hero.cta1"></i18n-text></a>
+              <a class="btn" href="#quickstart"><i18n-text :zh="dict.zh.hero.cta2" :en="dict.en.hero.cta2"></i18n-text></a>
             </div>
           </div>
           <figure class="hero-figure" aria-hidden="true">
@@ -85,10 +85,10 @@
       <div class="container">
         <header class="section-head">
           <span class="sec-no">01</span>
-          <h2>{{ t.about.title }}</h2>
+          <h2><i18n-text :zh="dict.zh.about.title" :en="dict.en.about.title"></i18n-text></h2>
         </header>
         <div class="prose">
-          <p v-for="(p, i) in t.about.paras" :key="i" v-html="p"></p>
+          <p v-for="(p, i) in t.about.paras" :key="i"><i18n-text block html :zh="dict.zh.about.paras[i]" :en="dict.en.about.paras[i]"></i18n-text></p>
         </div>
       </div>
     </section>
@@ -98,13 +98,13 @@
       <div class="container">
         <header class="section-head">
           <span class="sec-no">02</span>
-          <h2>{{ t.featuresTitle }}</h2>
+          <h2><i18n-text :zh="dict.zh.featuresTitle" :en="dict.en.featuresTitle"></i18n-text></h2>
         </header>
         <div class="cards">
           <article class="card" v-for="(f, i) in t.features" :key="i">
             <span class="card-no">{{ pad(i + 1) }}</span>
-            <h3>{{ f.title }}</h3>
-            <p>{{ f.body }}</p>
+            <h3><i18n-text block :zh="dict.zh.features[i].title" :en="dict.en.features[i].title"></i18n-text></h3>
+            <p><i18n-text block :zh="dict.zh.features[i].body" :en="dict.en.features[i].body"></i18n-text></p>
           </article>
         </div>
       </div>
@@ -115,39 +115,39 @@
       <div class="container">
         <header class="section-head">
           <span class="sec-no">03</span>
-          <h2>{{ t.arch.title }}</h2>
+          <h2><i18n-text :zh="dict.zh.arch.title" :en="dict.en.arch.title"></i18n-text></h2>
         </header>
         <div class="arch">
           <div class="arch-tier">
-            <p class="tier-label">{{ t.arch.labels.clients }}</p>
+            <p class="tier-label"><i18n-text block :zh="dict.zh.arch.labels.clients" :en="dict.en.arch.labels.clients"></i18n-text></p>
             <div class="tier-grid cols-2">
-              <div class="node" v-for="(c, i) in t.arch.clients" :key="i">{{ c }}</div>
+              <div class="node" v-for="(c, i) in t.arch.clients" :key="i"><i18n-text block :zh="dict.zh.arch.clients[i]" :en="dict.en.arch.clients[i]"></i18n-text></div>
             </div>
           </div>
           <div class="arch-link">
-            <span class="link-label">{{ t.arch.labels.mcp }}</span>
+            <span class="link-label"><i18n-text :zh="dict.zh.arch.labels.mcp" :en="dict.en.arch.labels.mcp"></i18n-text></span>
             <span class="link-line" aria-hidden="true"></span>
-            <span class="link-label">{{ t.arch.labels.events }}</span>
+            <span class="link-label"><i18n-text :zh="dict.zh.arch.labels.events" :en="dict.en.arch.labels.events"></i18n-text></span>
           </div>
           <div class="arch-tier">
-            <p class="tier-label">{{ t.arch.labels.core }}</p>
+            <p class="tier-label"><i18n-text block :zh="dict.zh.arch.labels.core" :en="dict.en.arch.labels.core"></i18n-text></p>
             <div class="node node-core">
               <strong>Rust Core</strong>
               <div class="chips">
-                <span v-for="(c, i) in t.arch.coreChips" :key="i">{{ c }}</span>
+                <span v-for="(c, i) in t.arch.coreChips" :key="i"><i18n-text :zh="dict.zh.arch.coreChips[i]" :en="dict.en.arch.coreChips[i]"></i18n-text></span>
               </div>
             </div>
           </div>
           <div class="arch-link"><span class="link-line" aria-hidden="true"></span></div>
           <div class="arch-tier">
-            <p class="tier-label">{{ t.arch.labels.hosts }}</p>
+            <p class="tier-label"><i18n-text block :zh="dict.zh.arch.labels.hosts" :en="dict.en.arch.labels.hosts"></i18n-text></p>
             <div class="tier-grid cols-3">
               <div class="node node-host" v-for="h in t.arch.hosts" :key="h.name">
                 <strong>{{ h.name }}</strong>
                 <span class="node-meta">{{ h.meta }}</span>
               </div>
             </div>
-            <p class="arch-note">{{ t.arch.note }}</p>
+            <p class="arch-note"><i18n-text block :zh="dict.zh.arch.note" :en="dict.en.arch.note"></i18n-text></p>
           </div>
         </div>
       </div>
@@ -158,19 +158,19 @@
       <div class="container">
         <header class="section-head">
           <span class="sec-no">04</span>
-          <h2>{{ t.quickstart.title }}</h2>
+          <h2><i18n-text :zh="dict.zh.quickstart.title" :en="dict.en.quickstart.title"></i18n-text></h2>
         </header>
         <ol class="steps">
           <li v-for="(s, i) in t.quickstart.steps" :key="i">
             <span class="step-no">{{ pad(i + 1) }}</span>
             <div class="step-body">
-              <h3>{{ s.title }}</h3>
-              <p class="step-desc" v-if="s.desc">{{ s.desc }}</p>
+            <h3><i18n-text block :zh="dict.zh.quickstart.steps[i].title" :en="dict.en.quickstart.steps[i].title"></i18n-text></h3>
+              <p class="step-desc" v-if="s.desc"><i18n-text block :zh="dict.zh.quickstart.steps[i].desc" :en="dict.en.quickstart.steps[i].desc"></i18n-text></p>
               <pre class="code" v-if="s.cmd"><code>{{ s.cmd }}</code></pre>
             </div>
           </li>
         </ol>
-        <p class="verify">{{ t.quickstart.verify }}</p>
+        <p class="verify"><i18n-text block :zh="dict.zh.quickstart.verify" :en="dict.en.quickstart.verify"></i18n-text></p>
       </div>
     </section>
 
@@ -180,11 +180,11 @@
     <div class="container">
       <p class="footer-title">Ligamina<span class="accent">.</span></p>
       <nav class="footer-links" aria-label="Footer links">
-        <a v-for="l in t.linksItems" :key="l.k" :href="l.href" target="_blank" rel="noopener">{{ l.k }}&nbsp;<span aria-hidden="true">↗</span></a>
+        <a v-for="(l, i) in t.linksItems" :key="l.k" :href="l.href" target="_blank" rel="noopener"><i18n-text :zh="dict.zh.linksItems[i].k" :en="dict.en.linksItems[i].k"></i18n-text>&nbsp;<span aria-hidden="true">↗</span></a>
       </nav>
       <div class="footer-row">
-        <p>{{ t.footer.line }}</p>
-        <p>© 2026 Eternal-Wanderer-Vegetable · AGPL-3.0 · <a class="footer-top" href="#top">{{ t.footer.top }}</a></p>
+        <p><i18n-text block :zh="dict.zh.footer.line" :en="dict.en.footer.line"></i18n-text></p>
+        <p>© 2026 Eternal-Wanderer-Vegetable · AGPL-3.0 · <a class="footer-top" href="#top"><i18n-text :zh="dict.zh.footer.top" :en="dict.en.footer.top"></i18n-text></a></p>
       </div>
     </div>
   </footer>

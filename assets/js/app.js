@@ -149,7 +149,7 @@
     }
   };
 
-  Vue.createApp({
+  var app = Vue.createApp({
     setup: function () {
       var ref = Vue.ref;
       var computed = Vue.computed;
@@ -174,9 +174,39 @@
         document.title = TITLES[l];
       }, { immediate: true });
 
-      return { lang: lang, t: t, setLang: setLang, pad: pad, links: LINKS };
+      return { lang: lang, t: t, dict: DICT, setLang: setLang, pad: pad, links: LINKS };
     }
-  }).mount("#app");
+  });
+
+  // Render both translations in the same grid cell. The inactive layer stays
+  // invisible but contributes to the grid's intrinsic size, so a language
+  // change can swap copy without moving surrounding content.
+  app.component("i18n-text", {
+    props: {
+      zh: { type: String, default: "" },
+      en: { type: String, default: "" },
+      block: { type: Boolean, default: false },
+      html: { type: Boolean, default: false }
+    },
+    setup: function (props) {
+      function layer(value, locale) {
+        var attributes = { class: "i18n-layer", lang: locale };
+        if (props.html) {
+          attributes.innerHTML = value;
+          return Vue.h("span", attributes);
+        }
+        return Vue.h("span", attributes, value);
+      }
+
+      return function () {
+        return Vue.h("span", {
+          class: ["i18n-text", props.block && "i18n-text-block"]
+        }, [layer(props.zh, "zh-CN"), layer(props.en, "en")]);
+      };
+    }
+  });
+
+  app.mount("#app");
 
   /* ---- hero network animation --------------------------------------
      CORE stays fixed at the centre; the three host nodes orbit it
