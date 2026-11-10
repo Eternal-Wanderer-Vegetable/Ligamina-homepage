@@ -195,22 +195,8 @@ section { scroll-margin-top: 84px; }
 
 .net { width: 100%; height: auto; font-family: inherit; }
 
-/* slow orbital spin; labels counter-rotate so they stay upright */
-.net-rotor {
-  transform-box: view-box;
-  transform-origin: 50% 50%;
-  animation: net-spin 36s linear infinite;
-}
-
-.net-rotor text {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: net-spin 36s linear infinite reverse;
-}
-
-@keyframes net-spin {
-  to { transform: rotate(360deg); }
-}
+/* node orbits are driven by JS (app.js) — CORE stays fixed while the
+   three hosts circle it on three different radial sine waves */
 
 /* ============ SECTIONS ============ */
 

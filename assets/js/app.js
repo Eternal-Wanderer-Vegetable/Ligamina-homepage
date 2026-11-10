@@ -207,4 +207,63 @@
       return { lang: lang, t: t, setLang: setLang, pad: pad, links: LINKS };
     }
   }).mount("#app");
+
+  /* ---- hero network animation --------------------------------------
+     CORE stays fixed at the centre; the three host nodes orbit it
+     while their radius breathes on three sine waves with different
+     periods, phases and amplitudes. ---- */
+  function initNetwork() {
+    var svg = document.querySelector(".net");
+    if (!svg) return;
+
+    var CX = 260, CY = 235; // CORE centre (never moves)
+    var ORBIT = 46;         // seconds per revolution
+    var cfg = [
+      { R: 192, amp: 30, period: 13, phase: 0,     theta0: -2.388 }, // KOISHI
+      { R: 198, amp: 26, period: 17, phase: 2.094, theta0: -0.691 }, // NONEBOT
+      { R: 178, amp: 34, period: 11, phase: 4.189, theta0: 1.695 }   // ASTRBOT
+    ];
+
+    var nodes = svg.querySelectorAll(".net-node");
+    var spokes = svg.querySelectorAll(".net-spoke");
+    var chords = svg.querySelectorAll(".net-chord");
+    if (nodes.length !== 3 || spokes.length !== 3 || chords.length !== 3) return;
+
+    function place(t) {
+      var pts = [];
+      for (var i = 0; i < 3; i++) {
+        var c = cfg[i];
+        var ang = c.theta0 + (2 * Math.PI / ORBIT) * t;
+        var r = c.R + c.amp * Math.sin((2 * Math.PI * t) / c.period + c.phase);
+        var x = CX + r * Math.cos(ang);
+        var y = CY + r * Math.sin(ang);
+        pts.push([x, y]);
+        nodes[i].setAttribute("transform", "translate(" + x.toFixed(2) + " " + y.toFixed(2) + ")");
+        spokes[i].setAttribute("x2", x.toFixed(2));
+        spokes[i].setAttribute("y2", y.toFixed(2));
+      }
+      var pairs = [[0, 1], [1, 2], [2, 0]];
+      for (var j = 0; j < 3; j++) {
+        chords[j].setAttribute("x1", pts[pairs[j][0]][0].toFixed(2));
+        chords[j].setAttribute("y1", pts[pairs[j][0]][1].toFixed(2));
+        chords[j].setAttribute("x2", pts[pairs[j][1]][0].toFixed(2));
+        chords[j].setAttribute("y2", pts[pairs[j][1]][1].toFixed(2));
+      }
+    }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      place(0); // static layout only
+      return;
+    }
+
+    var start = null;
+    function frame(ts) {
+      if (start === null) start = ts;
+      place((ts - start) / 1000);
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  initNetwork();
 })();
