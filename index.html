@@ -10,7 +10,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://github.com/Eternal-Wanderer-Vegetable/Ligamina">
   <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20fill='%23E63312'/%3E%3Ctext%20x='32'%20y='45'%20font-family='Helvetica,Arial,sans-serif'%20font-size='38'%20font-weight='bold'%20fill='white'%20text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./assets/css/style.css?v=9378831">
+  <link rel="stylesheet" href="./assets/css/style.css?v=9378832">
 </head>
 <body id="top">
 <div id="app" v-cloak>
@@ -239,9 +239,15 @@
           <li v-for="(s, i) in t.quickstart.steps" :key="i">
             <span class="step-no">{{ pad(i + 1) }}</span>
             <div class="step-body">
-            <h3><i18n-text block :zh="dict.zh.quickstart.steps[i].title" :en="dict.en.quickstart.steps[i].title"></i18n-text></h3>
+              <h3><i18n-text block :zh="dict.zh.quickstart.steps[i].title" :en="dict.en.quickstart.steps[i].title"></i18n-text></h3>
               <p class="step-desc" v-if="s.desc"><i18n-text block :zh="dict.zh.quickstart.steps[i].desc" :en="dict.en.quickstart.steps[i].desc"></i18n-text></p>
-              <pre class="code" v-if="s.cmd"><code>{{ s.cmd }}</code></pre>
+              <div class="code-block" v-if="s.cmd">
+                <button class="code-copy" type="button" :aria-label="copyLabel(i)" aria-live="polite" @click="copyCode(s.cmd, i)">
+                  <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="5" y="5" width="9" height="10" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M11 3V2.5A1.5 1.5 0 0 0 9.5 1h-7A1.5 1.5 0 0 0 1 2.5v8A1.5 1.5 0 0 0 2.5 12H4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+                  <span>{{ copyLabel(i) }}</span>
+                </button>
+                <pre class="code"><code>{{ s.cmd }}</code></pre>
+              </div>
             </div>
           </li>
         </ol>
@@ -254,8 +260,7 @@
             <a v-for="(l, i) in t.linksItems" :key="l.k" :href="l.href" target="_blank" rel="noopener"><i18n-text :zh="dict.zh.linksItems[i].k" :en="dict.en.linksItems[i].k"></i18n-text>&nbsp;<span aria-hidden="true">↗</span></a>
           </nav>
           <div class="footer-row">
-            <p><i18n-text block :zh="dict.zh.footer.line" :en="dict.en.footer.line"></i18n-text></p>
-            <p>© 2026 Eternal-Wanderer-Vegetable · AGPL-3.0 · <a class="footer-top" href="#top" @click.prevent="navigate('home')"><i18n-text :zh="dict.zh.footer.top" :en="dict.en.footer.top"></i18n-text></a></p>
+            <p>© 2026 Eternal-Wanderer-Vegetable · AGPL-3.0</p>
           </div>
         </div>
       </footer>
@@ -272,6 +277,6 @@
 </div>
 
 <script src="./assets/vendor/vue.global.prod.js"></script>
-<script src="./assets/js/app.js?v=9378830"></script>
+<script src="./assets/js/app.js?v=9378832"></script>
 </body>
 </html>

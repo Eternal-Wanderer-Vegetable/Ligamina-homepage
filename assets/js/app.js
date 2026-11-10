@@ -75,6 +75,9 @@
       },
       quickstart: {
         title: "快速开始",
+        copy: "复制命令",
+        copied: "已复制",
+        copyFailed: "复制失败",
         steps: [
           { title: "构建 Core", cmd: "cargo build -p ligamina-cli --locked" },
           { title: "准备 Host", desc: "Koishi Host 用 npm ci，Python Host 用 uv sync --locked。", cmd: "npm ci            # Koishi host\nuv sync --locked  # Python hosts" },
@@ -86,14 +89,10 @@
       linksItems: [
         { k: "源代码仓库", href: LINKS.repo },
         { k: "提交 Issue", href: LINKS.issues },
-        { k: "项目文档（docs/ · AGENTS.md）", href: LINKS.docs },
-        { k: "许可证 · AGPL-3.0", href: LINKS.license }
+        { k: "项目文档", href: LINKS.docs },
+        { k: "许可证", href: LINKS.license }
       ],
-      pager: { home: "首页" },
-      footer: {
-        line: "一个运行时，多个世界——Ligamina 项目展示页。",
-        top: "回到顶部 ↑"
-      }
+      pager: { home: "首页" }
     },
 
     /* ================= EN ================= */
@@ -155,6 +154,9 @@
       },
       quickstart: {
         title: "Quick start",
+        copy: "Copy command",
+        copied: "Copied",
+        copyFailed: "Copy failed",
         steps: [
           { title: "Build the Core", cmd: "cargo build -p ligamina-cli --locked" },
           { title: "Prepare the hosts", desc: "npm ci for the Koishi host, uv sync --locked for the Python hosts.", cmd: "npm ci            # Koishi host\nuv sync --locked  # Python hosts" },
@@ -166,14 +168,10 @@
       linksItems: [
         { k: "Source repository", href: LINKS.repo },
         { k: "Report an issue", href: LINKS.issues },
-        { k: "Documentation (docs/ · AGENTS.md)", href: LINKS.docs },
-        { k: "License · AGPL-3.0", href: LINKS.license }
+        { k: "Documentation", href: LINKS.docs },
+        { k: "License", href: LINKS.license }
       ],
-      pager: { home: "Home" },
-      footer: {
-        line: "One runtime, many worlds — the showcase page for the Ligamina project.",
-        top: "Back to top ↑"
-      }
+      pager: { home: "Home" }
     }
   };
 
@@ -199,10 +197,57 @@
       var lang = ref(initial);
       var t = computed(function () { return DICT[lang.value]; });
       var activePage = ref(pageFromLocation());
+      var copyState = ref({ index: -1, status: "idle" });
+      var copyTimer = 0;
 
       function setLang(l) { lang.value = l; }
 
       function pad(n) { return String(n).padStart(2, "0"); }
+
+      function copyLabel(index) {
+        if (copyState.value.index !== index) return t.value.quickstart.copy;
+        return t.value.quickstart[copyState.value.status] || t.value.quickstart.copy;
+      }
+
+      function fallbackCopy(text) {
+        return new Promise(function (resolve, reject) {
+          var textarea = document.createElement("textarea");
+          textarea.value = text;
+          textarea.setAttribute("readonly", "");
+          textarea.style.position = "fixed";
+          textarea.style.opacity = "0";
+          document.body.appendChild(textarea);
+          textarea.select();
+          textarea.setSelectionRange(0, textarea.value.length);
+          try {
+            if (document.execCommand("copy")) resolve();
+            else reject(new Error("Clipboard copy failed"));
+          } catch (error) {
+            reject(error);
+          } finally {
+            document.body.removeChild(textarea);
+          }
+        });
+      }
+
+      function copyCode(text, index) {
+        var copied = navigator.clipboard && navigator.clipboard.writeText
+          ? navigator.clipboard.writeText(text).catch(function () { return fallbackCopy(text); })
+          : fallbackCopy(text);
+        copied.then(function () {
+          copyState.value = { index: index, status: "copied" };
+          window.clearTimeout(copyTimer);
+          copyTimer = window.setTimeout(function () {
+            copyState.value = { index: -1, status: "idle" };
+          }, 2200);
+        }).catch(function () {
+          copyState.value = { index: index, status: "copyFailed" };
+          window.clearTimeout(copyTimer);
+          copyTimer = window.setTimeout(function () {
+            copyState.value = { index: -1, status: "idle" };
+          }, 2200);
+        });
+      }
 
       function scrollToPage(id, immediate) {
         var target = document.getElementById(id === "home" ? "home" : id);
@@ -274,6 +319,8 @@
         dict: DICT,
         setLang: setLang,
         pad: pad,
+        copyCode: copyCode,
+        copyLabel: copyLabel,
         links: LINKS,
         activePage: activePage,
         navigate: navigate
