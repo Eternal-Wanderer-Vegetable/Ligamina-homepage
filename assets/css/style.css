@@ -149,13 +149,12 @@ section { scroll-margin-top: 0; }
   flex: 0 0 auto;
   width: 40px;
   height: 40px;
-  border: 1px solid var(--ink);
-  transition: background .15s ease, color .15s ease;
+  transition: color .15s ease;
 }
 
 .gh-link svg { display: block; width: 20px; height: 20px; }
 
-.gh-link:hover { background: var(--ink); color: var(--paper); }
+.gh-link:hover { color: var(--red); }
 
 /* ============ HERO ============ */
 
