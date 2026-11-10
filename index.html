@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ligamina — 一个运行时，多套聊天机器人插件生态 · One runtime, multiple chatbot plugin ecosystems</title>
+  <meta name="description" content="Ligamina：基于 Rust 的聊天机器人插件互操作运行时——Koishi / NoneBot / AstrBot 原生插件免改运行，经 MCP 风格接口暴露给任何机器人或 AI 智能体。A Rust-based runtime that runs native chatbot plugins unchanged behind one MCP-style interface.">
+  <meta property="og:title" content="Ligamina — One runtime, multiple chatbot plugin ecosystems">
+  <meta property="og:description" content="Reuse native Koishi / NoneBot / AstrBot plugins without rebuilding their worlds. 复用原生插件，无需重建它们的世界。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://github.com/Eternal-Wanderer-Vegetable/Ligamina">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20fill='%23E63312'/%3E%3Ctext%20x='32'%20y='45'%20font-family='Helvetica,Arial,sans-serif'%20font-size='38'%20font-weight='bold'%20fill='white'%20text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body id="top">
+<div id="app" v-cloak>
+
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span>LIGAMINA</a>
+      <nav class="site-nav" aria-label="Sections">
+        <a v-for="s in t.nav" :key="s.id" :href="'#' + s.id">{{ s.label }}</a>
+      </nav>
+      <div class="header-tools">
+        <div class="lang-switch" role="group" aria-label="Language / 语言">
+          <button type="button" :class="{ active: lang === 'zh' }" :aria-pressed="lang === 'zh'" @click="setLang('zh')">中文</button>
+          <span class="lang-sep" aria-hidden="true">/</span>
+          <button type="button" :class="{ active: lang === 'en' }" :aria-pressed="lang === 'en'" @click="setLang('en')">EN</button>
+        </div>
+        <a class="gh-link" :href="links.repo" target="_blank" rel="noopener">GitHub&nbsp;↗</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="kicker">{{ t.hero.kicker }}</p>
+            <h1 class="hero-title">Ligamina<span class="accent">*</span></h1>
+            <p class="hero-tagline">{{ t.hero.tagline }}</p>
+            <p class="hero-sub">{{ t.hero.sub }}</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" :href="links.repo" target="_blank" rel="noopener">{{ t.hero.cta1 }}</a>
+              <a class="btn" href="#quickstart">{{ t.hero.cta2 }}</a>
+            </div>
+          </div>
+          <figure class="hero-figure" aria-hidden="true">
+            <svg class="net" viewBox="0 0 520 470">
+              <g stroke="#111" stroke-width="1.5" fill="none">
+                <line x1="260" y1="230" x2="112" y2="96"/>
+                <line x1="260" y1="230" x2="418" y2="104"/>
+                <line x1="260" y1="230" x2="240" y2="396"/>
+                <line x1="112" y1="96" x2="418" y2="104" stroke-dasharray="4 7"/>
+                <line x1="418" y1="104" x2="240" y2="396" stroke-dasharray="4 7"/>
+                <line x1="240" y1="396" x2="112" y2="96" stroke-dasharray="4 7"/>
+              </g>
+              <g font-family="inherit" font-size="11" font-weight="700" letter-spacing="1" text-anchor="middle">
+                <circle cx="112" cy="96" r="46" fill="#fff" stroke="#111" stroke-width="2"/>
+                <text x="112" y="100">KOISHI</text>
+                <circle cx="418" cy="104" r="46" fill="#fff" stroke="#111" stroke-width="2"/>
+                <text x="418" y="108">NONEBOT</text>
+                <circle cx="240" cy="396" r="46" fill="#fff" stroke="#111" stroke-width="2"/>
+                <text x="240" y="400">ASTRBOT</text>
+              </g>
+              <circle cx="260" cy="230" r="66" fill="#E63312"/>
+              <text x="260" y="236" fill="#fff" font-size="15" font-weight="700" letter-spacing="2" text-anchor="middle">CORE</text>
+            </svg>
+          </figure>
+        </div>
+
+        <ul class="facts">
+          <li v-for="(f, i) in t.facts" :key="i">
+            <span class="fact-k">{{ f.k }}</span>
+            <span class="fact-v">{{ f.v }}</span>
+          </li>
+        </ul>
+        <p class="footnote">{{ t.hero.footnote }}</p>
+      </div>
+    </section>
+
+    <!-- ============ 01 ABOUT ============ -->
+    <section id="about" class="section">
+      <div class="container">
+        <header class="section-head">
+          <span class="sec-no">01</span>
+          <h2>{{ t.about.title }}</h2>
+        </header>
+        <div class="prose">
+          <p v-for="(p, i) in t.about.paras" :key="i" v-html="p"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 02 FEATURES ============ -->
+    <section id="features" class="section">
+      <div class="container">
+        <header class="section-head">
+          <span class="sec-no">02</span>
+          <h2>{{ t.featuresTitle }}</h2>
+        </header>
+        <div class="cards">
+          <article class="card" v-for="(f, i) in t.features" :key="i">
+            <span class="card-no">{{ pad(i + 1) }}</span>
+            <h3>{{ f.title }}</h3>
+            <p>{{ f.body }}</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 03 ARCHITECTURE ============ -->
+    <section id="architecture" class="section">
+      <div class="container">
+        <header class="section-head">
+          <span class="sec-no">03</span>
+          <h2>{{ t.arch.title }}</h2>
+        </header>
+        <div class="arch">
+          <div class="arch-tier">
+            <p class="tier-label">{{ t.arch.labels.clients }}</p>
+            <div class="tier-grid cols-2">
+              <div class="node" v-for="(c, i) in t.arch.clients" :key="i">{{ c }}</div>
+            </div>
+          </div>
+          <div class="arch-link">
+            <span class="link-label">{{ t.arch.labels.mcp }}</span>
+            <span class="link-line" aria-hidden="true"></span>
+            <span class="link-label">{{ t.arch.labels.events }}</span>
+          </div>
+          <div class="arch-tier">
+            <p class="tier-label">{{ t.arch.labels.core }}</p>
+            <div class="node node-core">
+              <strong>Rust Core</strong>
+              <div class="chips">
+                <span v-for="(c, i) in t.arch.coreChips" :key="i">{{ c }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="arch-link"><span class="link-line" aria-hidden="true"></span></div>
+          <div class="arch-tier">
+            <p class="tier-label">{{ t.arch.labels.hosts }}</p>
+            <div class="tier-grid cols-3">
+              <div class="node node-host" v-for="h in t.arch.hosts" :key="h.name">
+                <strong>{{ h.name }}</strong>
+                <span class="node-meta">{{ h.meta }}</span>
+              </div>
+            </div>
+            <p class="arch-note">{{ t.arch.note }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 04 QUICK START ============ -->
+    <section id="quickstart" class="section">
+      <div class="container">
+        <header class="section-head">
+          <span class="sec-no">04</span>
+          <h2>{{ t.quickstart.title }}</h2>
+        </header>
+        <ol class="steps">
+          <li v-for="(s, i) in t.quickstart.steps" :key="i">
+            <span class="step-no">{{ pad(i + 1) }}</span>
+            <div class="step-body">
+              <h3>{{ s.title }}</h3>
+              <p class="step-desc" v-if="s.desc">{{ s.desc }}</p>
+              <pre class="code" v-if="s.cmd"><code>{{ s.cmd }}</code></pre>
+            </div>
+          </li>
+        </ol>
+        <p class="verify">{{ t.quickstart.verify }}</p>
+      </div>
+    </section>
+
+    <!-- ============ 05 STATUS ============ -->
+    <section id="status" class="section">
+      <div class="container">
+        <header class="section-head">
+          <span class="sec-no">05</span>
+          <h2>{{ t.statusTitle }}</h2>
+        </header>
+        <ul class="status-list">
+          <li v-for="(r, i) in t.status" :key="i">
+            <span class="status-label">{{ r.label }}</span>
+            <span class="status-note" v-if="r.note">{{ r.note }}</span>
+            <span class="status-tag" :class="r.state === 'pass' ? 'tag-pass' : 'tag-blocked'">
+              {{ r.state === 'pass' ? t.statusWords.pass : t.statusWords.blocked }}
+            </span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ 06 LINKS ============ -->
+    <section id="links" class="section">
+      <div class="container">
+        <header class="section-head">
+          <span class="sec-no">06</span>
+          <h2>{{ t.linksTitle }}</h2>
+        </header>
+        <ul class="link-list">
+          <li v-for="l in t.linksItems" :key="l.k">
+            <a :href="l.href" target="_blank" rel="noopener">
+              <span>{{ l.k }}</span>
+              <span class="link-arrow" aria-hidden="true">↗</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p class="footer-title">Ligamina<span class="accent">.</span></p>
+      <div class="footer-row">
+        <p>{{ t.footer.line }}</p>
+        <p>© 2026 Eternal-Wanderer-Vegetable · AGPL-3.0 · <a class="footer-top" href="#top">{{ t.footer.top }}</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <noscript>
+    <p style="padding:16px;font-family:sans-serif">
+      This page needs JavaScript. Visit the repository directly: https://github.com/Eternal-Wanderer-Vegetable/Ligamina<br>
+      本页需要启用 JavaScript；也可以直接访问仓库。
+    </p>
+  </noscript>
+</div>
+
+<script src="./assets/vendor/vue.global.prod.js"></script>
+<script src="./assets/js/app.js"></script>
+</body>
+</html>
